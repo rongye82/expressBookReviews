@@ -6,73 +6,35 @@ const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
 
 const app = express();
+// ===== Middleware Setup =====
+app.use(cors({
+  origin: 'https://thomaskoh1982.github.io',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
+}));
 
-// 1. Universal CORS Handler
-app.use((req, res, next) => {
-  // Allow your specific frontend origin
-  res.setHeader('Access-Control-Allow-Origin', 'https://thomaskoh1982.github.io');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
-  
-  // Immediately respond to OPTIONS preflight
-  if (req.method === 'OPTIONS') {
-    return res.status(200).end();
-  }
-  
-  next();
-});
+app.use(express.json());
 
-// 2. Working Test Endpoint
-app.get('/cors-test', (req, res) => {
-  res.json({
-    status: 'CORS_SUCCESS',
-    yourOrigin: req.headers.origin,
-    timestamp: new Date().toISOString()
-  });
-});
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true, sameSite: 'none' }
+}));
 
-// 3. Root Endpoint
-//app.get('/', (req, res) => {
-//  res.send('API_ROOT - Test CORS at /cors-test');
-//});
+// ===== Route Mounting =====
+// Mount general routes at root ("/")
+app.use('/', genl_routes);
 
-//Root Endpoint
-app.get('/', (req, res) => {
-  // Forward to the general router
-  genl_routes(req, res);
-});
+// Mount authenticated routes under "/customer"
+app.use('/customer', customer_routes);
 
-// 4. Error Handling
+// ===== Error Handling =====
 app.use((req, res) => {
   res.status(404).json({ error: 'ENDPOINT_NOT_FOUND' });
 });
 
 module.exports = app;
-
-// Enhanced CORS configuration
-/*app.use((req, res, next) => {
-  const allowedOrigins = [
-    'https://thomaskoh1982.github.io',
-    'http://localhost:3000' // For development
-  ];
-  const origin = req.headers.origin;
-  
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Expose-Headers', 'Set-Cookie');
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  
-  next();
-});*/
 
 // Session configuration
 app.use(session({

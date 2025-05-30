@@ -15,19 +15,19 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use(session({
+/*app.use(session({
   secret: 'your-secret-key',
   resave: false,
   saveUninitialized: true,
   cookie: { secure: true, sameSite: 'none' }
-}));
+}));*/
 
 // ===== Route Mounting =====
 // Mount general routes at root ("/")
-app.use('/', genl_routes);
+//app.use('/', genl_routes);
 
 // Mount authenticated routes under "/customer"
-app.use('/customer', customer_routes);
+//app.use('/customer', customer_routes);
 
 // ===== Error Handling =====
 app.use((req, res) => {

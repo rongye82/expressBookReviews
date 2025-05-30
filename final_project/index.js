@@ -6,6 +6,17 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
+// Basic test route
+app.get('/', (req, res) => {
+  res.send('<h1>Express Book Reviews API</h1>');
+});
+
+// Dynamic port for Vercel
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 app.use(express.json());
 
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))

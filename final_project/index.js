@@ -6,6 +6,9 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Running on port ${PORT}`));
+
 app.use(express.json());
 
 app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))

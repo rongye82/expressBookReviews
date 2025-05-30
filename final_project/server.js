@@ -79,9 +79,9 @@ app.get('/', (req, res) => {
 app.use("/", genl_routes);
 
 // Root route
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   res.send('<h1>Express Book Reviews API</h1>');
-});
+});*/
 
 // Error handling
 app.use((req, res) => {

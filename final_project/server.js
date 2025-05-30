@@ -4,6 +4,7 @@ const cors = require('cors');
 const session = require('express-session');
 const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
+const books = require('./booksdb.js'); // Add at top of file
 
 const app = express();
 
@@ -69,6 +70,12 @@ app.use("/customer/auth/*", (req, res, next) => {
 
 // Routes
 app.use("/customer", customer_routes);
+// Put this BEFORE the general routes
+app.get('/', (req, res) => {
+  res.json(books); // Make sure to require booksdb.js
+});
+
+app.use("/", genl_routes);
 app.use("/", genl_routes);
 
 // Root route

@@ -33,71 +33,16 @@ app.get('/cors-test', (req, res) => {
 });
 
 // 3. Root Endpoint
-/*app.get('/', (req, res) => {
-  res.send('API_ROOT - Test CORS at /cors-test');
-});*/
+//app.get('/', (req, res) => {
+//  res.send('API_ROOT - Test CORS at /cors-test');
+//});
 
 // 4. Error Handling
 app.use((req, res) => {
   res.status(404).json({ error: 'ENDPOINT_NOT_FOUND' });
 });
 
-// 1. Mandatory CORS headers
-/*app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', 'https://thomaskoh1982.github.io');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  
-  if (req.method === 'OPTIONS') {
-    return res.status(204).send();
-  }
-  next();
-});
-
-// 2. Test endpoints
-app.get('/cors-test', (req, res) => {
-  res.json({ 
-    status: 'CORS working',
-    timestamp: new Date(),
-    headers: req.headers 
-  });
-});
-
-app.get('/', (req, res) => {
-  res.send('API root - use /cors-test for CORS verification');
-});
-
-// 3. Error handling
-app.use((req, res) => {
-  res.status(404).json({ error: 'Not found' });
-});*/
-
 module.exports = app;
-
-// Enhanced CORS configuration
-/*app.use((req, res, next) => {
-  const allowedOrigins = [
-    'https://thomaskoh1982.github.io',
-    'http://localhost:3000' // For development
-  ];
-  const origin = req.headers.origin;
-  
-  if (allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Expose-Headers', 'Set-Cookie');
-  
-  // Handle preflight requests
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  
-  next();
-});*/
 
 // Session configuration
 app.use(session({

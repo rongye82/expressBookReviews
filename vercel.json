@@ -5,18 +5,8 @@
       "src": "final_project/server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": [
-          "final_project/**/*.js",
-          "final_project/**/*.json"
-        ]
+        "includeFiles": ["final_project/**/*"]
       }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "final_project/server.js",
-      "methods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"]
     }
   ],
   "headers": [
@@ -38,22 +28,6 @@
         {
           "key": "Access-Control-Allow-Credentials",
           "value": "true"
-        },
-        {
-          "key": "X-DNS-Prefetch-Control",
-          "value": "on"
-        },
-        {
-          "key": "Strict-Transport-Security",
-          "value": "max-age=63072000; includeSubDomains; preload"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "SAMEORIGIN"
-        },
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
         }
       ]
     }

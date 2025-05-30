@@ -1,11 +1,20 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-//const cors = require('cors');
+const cors = require('cors');
 const session = require('express-session');
 const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
 
 const app = express();
+
+// Add CORS configuration
+const corsOptions = {
+  origin: 'https://thomaskoh1982.github.io',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions)); // Use CORS middleware
 
 // Middleware
 app.use(express.json());

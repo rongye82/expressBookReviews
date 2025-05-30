@@ -7,12 +7,24 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
-// Add CORS configuration
-const corsOptions = {
-  origin: 'https://thomaskoh1982.github.io',
+// CORS Configuration
+const allowedOrigins = [
+  'https://thomaskoh1982.github.io',
+  'http://localhost:3000' // For local testing
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  optionsSuccessStatus: 200
-};
+  exposedHeaders: ['set-cookie']
+}));
+
 
 app.use(cors(corsOptions)); // Use CORS middleware
 

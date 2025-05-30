@@ -2,7 +2,7 @@
   "version": 2,
   "builds": [
     {
-      "src": "final-project/index.js",
+      "src": "final-project/server.js",
       "use": "@vercel/node",
       "config": {
         "includeFiles": ["final-project/**/*"]
@@ -12,7 +12,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "final-project/index.js"
+      "dest": "final-project/server.js"
     }
   ]
 }

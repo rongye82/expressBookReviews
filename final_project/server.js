@@ -7,7 +7,44 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
-// CORS Configuration
+// Enhanced CORS configuration
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    'https://thomaskoh1982.github.io',
+    'http://localhost:3000' // For development
+  ];
+  const origin = req.headers.origin;
+  
+  if (allowedOrigins.includes(origin)) {
+    res.header('Access-Control-Allow-Origin', origin);
+  }
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With');
+  res.header('Access-Control-Allow-Credentials', 'true');
+  res.header('Access-Control-Expose-Headers', 'Set-Cookie');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  
+  next();
+});
+
+// Session configuration
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'your-secret-key',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    secure: true,
+    sameSite: 'none',
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000
+  }
+}));
+
+/* CORS Configuration
 const allowedOrigins = [
   'https://thomaskoh1982.github.io',
   'http://localhost:3000' // For local testing
@@ -26,7 +63,7 @@ app.use(cors({
 }));
 
 
-app.use(cors(corsOptions)); // Use CORS middleware
+app.use(cors(corsOptions)); */// Use CORS middleware
 
 // Middleware
 app.use(express.json());

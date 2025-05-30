@@ -37,6 +37,12 @@ app.get('/cors-test', (req, res) => {
 //  res.send('API_ROOT - Test CORS at /cors-test');
 //});
 
+//Root Endpoint
+app.get('/', (req, res) => {
+  // Forward to the general router
+  genl_routes(req, res);
+});
+
 // 4. Error Handling
 app.use((req, res) => {
   res.status(404).json({ error: 'ENDPOINT_NOT_FOUND' });

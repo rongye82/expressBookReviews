@@ -3,13 +3,14 @@
   "version": "1.0.1",
   "description": "Express Book Reviews API",
   "main": "server.js",
+  {
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node final_project\server.js",
-    "dev": "nodemon final_project\server.js",
-    "start_auth": "node final_project\index_withauth.js",
-    "dev_auth": "nodemon final_project\index_withauth.js"
-  },
+    "start": "node final_project/server.js",
+    "dev": "nodemon final_project/server.js",
+    "start_auth": "node final_project/index_withauth.js",
+    "dev_auth": "nodemon final_project/index_withauth.js"
+  }
+}
   "keywords": ["books", "reviews", "express"],
   "author": "Your Name",
   "license": "MIT",
@@ -21,4 +22,3 @@
   "devDependencies": {
     "nodemon": "^2.0.19"
   }
-}

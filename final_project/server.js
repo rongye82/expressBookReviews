@@ -1,48 +1,49 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const session = require('express-session')
-const customer_routes = require('./final_project/router/auth_users.js').authenticated;
-const genl_routes = require('./final_project/router/general.js').general;
+const session = require('express-session');
+const customer_routes = require('./router/auth_users.js').authenticated;
+const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
-// Basic test route
+// Middleware
+app.use(express.json());
+
+// Session middleware
+app.use("/customer", session({
+  secret: "fingerprint_customer",
+  resave: true,
+  saveUninitialized: true
+}));
+
+// Auth middleware
+app.use("/customer/auth/*", (req, res, next) => {
+  if (req.session.authorization) {
+    const token = req.session.authorization['accessToken'];
+    jwt.verify(token, "access", (err, user) => {
+      if (err) return res.status(403).json({ message: "Unauthorized" });
+      req.user = user;
+      next();
+    });
+  } else {
+    return res.status(403).json({ message: "Not logged in" });
+  }
+});
+
+// Routes
+app.use("/customer", customer_routes);
+app.use("/", genl_routes);
+
+// Root route
 app.get('/', (req, res) => {
   res.send('<h1>Express Book Reviews API</h1>');
 });
 
-// Dynamic port for Vercel
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Export for Vercel (required!)
+module.exports = app;
 
-app.use(express.json());
-
-app.use("/customer",session({secret:"fingerprint_customer",resave: true, saveUninitialized: true}))
-
-app.use("/customer/auth/*", function auth(req,res,next){
-    //Check if user is logged in and has valid access token
-    if(req.session.authorization){
-        let token = req.session.authorization['accessToken'];
-        //Verify JWT token
-        jwt.verify(token, "access", (error,user)=>{
-            if(error){
-                res.send("User has not been authenticated");
-            }else{
-                req.user=user;
-                //Proceed to next anticipated middleware
-                next();
-            }
-        });
-    }else{
-        res.send("User is not logged in.");
-    }
-});
- 
-const PORT =5000;
-
-app.use("/customer", customer_routes);
-app.use("/", genl_routes);
-
-app.listen(PORT,()=>console.log("Server is running"));
+// Local testing (Vercel ignores this)
+if (require.main === module) {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Local server running on port ${PORT}`));
+}

@@ -2,17 +2,17 @@
   "version": 2,
   "builds": [
     {
-      "src": "final-project/server.js",
+      "src": "final_project/server.js",
       "use": "@vercel/node",
       "config": {
-        "includeFiles": ["final-project/**/*"]
+        "includeFiles": ["final_project/**/*"]
       }
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "final-project/server.js"
+      "dest": "final_project/server.js"
     }
   ]
 }

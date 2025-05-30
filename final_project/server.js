@@ -33,9 +33,9 @@ app.get('/cors-test', (req, res) => {
 });
 
 // 3. Root Endpoint
-app.get('/', (req, res) => {
+/*app.get('/', (req, res) => {
   res.send('API_ROOT - Test CORS at /cors-test');
-});
+});*/
 
 // 4. Error Handling
 app.use((req, res) => {

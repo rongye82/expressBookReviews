@@ -7,8 +7,21 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
+// Configure CORS with specific origin and credentials
+const corsOptions = {
+  origin: 'https://thomaskoh1982.github.io',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+// Apply CORS middleware
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions)); 
+
 // Enhanced CORS configuration
-app.use((req, res, next) => {
+/*app.use((req, res, next) => {
   const allowedOrigins = [
     'https://thomaskoh1982.github.io',
     'http://localhost:3000' // For development
@@ -29,7 +42,7 @@ app.use((req, res, next) => {
   }
   
   next();
-});
+});*/
 
 // Session configuration
 app.use(session({

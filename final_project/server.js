@@ -7,6 +7,15 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
+// Add CORS configuration
+const corsOptions = {
+  origin: 'https://thomaskoh1982.github.io',
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions)); // Use CORS middleware
+
 // Middleware
 app.use(express.json());
 

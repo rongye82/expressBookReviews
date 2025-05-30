@@ -7,8 +7,43 @@ const genl_routes = require('./router/general.js').general;
 
 const app = express();
 
-// 1. Mandatory CORS headers
+// 1. Universal CORS Handler
 app.use((req, res, next) => {
+  // Allow your specific frontend origin
+  res.setHeader('Access-Control-Allow-Origin', 'https://thomaskoh1982.github.io');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Immediately respond to OPTIONS preflight
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  
+  next();
+});
+
+// 2. Working Test Endpoint
+app.get('/cors-test', (req, res) => {
+  res.json({
+    status: 'CORS_SUCCESS',
+    yourOrigin: req.headers.origin,
+    timestamp: new Date().toISOString()
+  });
+});
+
+// 3. Root Endpoint
+app.get('/', (req, res) => {
+  res.send('API_ROOT - Test CORS at /cors-test');
+});
+
+// 4. Error Handling
+app.use((req, res) => {
+  res.status(404).json({ error: 'ENDPOINT_NOT_FOUND' });
+});
+
+// 1. Mandatory CORS headers
+/*app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', 'https://thomaskoh1982.github.io');
   res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
@@ -36,7 +71,7 @@ app.get('/', (req, res) => {
 // 3. Error handling
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
-});
+});*/
 
 module.exports = app;
 

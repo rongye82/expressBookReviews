@@ -1,8 +1,8 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const session = require('express-session')
-const customer_routes = require('.final_project/router/auth_users.js').authenticated;
-const genl_routes = require('.final_project/router/general.js').general;
+const customer_routes = require('./final_project/router/auth_users.js').authenticated;
+const genl_routes = require('./final_project/router/general.js').general;
 
 const app = express();
 

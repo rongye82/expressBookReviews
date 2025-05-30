@@ -1,9 +1,4 @@
 {
-  "name": "bookshop",
-  "version": "1.0.1",
-  "description": "Express Book Reviews API",
-  "main": "server.js",
-  {
   "scripts": {
     "start": "node final_project/server.js",
     "dev": "nodemon final_project/server.js",
@@ -11,14 +6,3 @@
     "dev_auth": "nodemon final_project/index_withauth.js"
   }
 }
-  "keywords": ["books", "reviews", "express"],
-  "author": "Your Name",
-  "license": "MIT",
-  "dependencies": {
-    "express": "^4.18.1",
-    "express-session": "^1.17.3",
-    "jsonwebtoken": "^8.5.1"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.19"
-  }

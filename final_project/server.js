@@ -4,7 +4,7 @@ const cors = require('cors');
 const session = require('express-session');
 const customer_routes = require('./router/auth_users.js').authenticated;
 const genl_routes = require('./router/general.js').general;
-const books = require('./router/booksdb.js'); // Add at top of file
+const books = require('./router/booksdb.js');
 
 const app = express();
 
@@ -71,17 +71,20 @@ app.use("/customer/auth/*", (req, res, next) => {
 // Routes
 app.use("/customer", customer_routes);
 
-// Put this BEFORE the general routes
+// Root endpoint - returns books JSON immediately
 app.get('/', (req, res) => {
-  res.json(books); // Make sure to require booksdb.js
+  res.json({
+    api: 'Express Book Reviews API',
+    books: books,
+    endpoints: {
+      customer: '/customer',
+      general: '/'
+    }
+  });
 });
 
+// General routes (includes its own delayed / endpoint, but won't conflict)
 app.use("/", genl_routes);
-
-// Root route
-/*app.get('/', (req, res) => {
-  res.send('<h1>Express Book Reviews API</h1>');
-});*/
 
 // Error handling
 app.use((req, res) => {

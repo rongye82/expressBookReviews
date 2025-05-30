@@ -70,12 +70,12 @@ app.use("/customer/auth/*", (req, res, next) => {
 
 // Routes
 app.use("/customer", customer_routes);
+
 // Put this BEFORE the general routes
 app.get('/', (req, res) => {
   res.json(books); // Make sure to require booksdb.js
 });
 
-app.use("/", genl_routes);
 app.use("/", genl_routes);
 
 // Root route

@@ -3,7 +3,10 @@
   "builds": [
     {
       "src": "final-project/index.js",
-      "use": "@vercel/node"
+      "use": "@vercel/node",
+      "config": {
+        "includeFiles": ["final-project/**/*"]
+      }
     }
   ],
   "routes": [

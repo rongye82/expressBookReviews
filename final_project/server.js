@@ -28,7 +28,7 @@ app.use(session({
 const allowedOrigins = [
   'https://rongye82.github.io',
   'http://localhost:3000', // For local testing
-  'https://express-book-reviews-beta.vercel.app',
+  //'https://express-book-reviews-beta.vercel.app',
   'https://thomaskoh1982.github.io'
 
 ];

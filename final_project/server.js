@@ -26,7 +26,7 @@ app.use(session({
 
 // CORS configuration
 const allowedOrigins = [
-  'https://thomaskoh1982.github.io',
+  'https://rongye82.github.io',
   'http://localhost:3000' // For local testing
 ];
 
